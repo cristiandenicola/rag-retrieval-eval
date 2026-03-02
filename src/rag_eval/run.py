@@ -8,6 +8,11 @@ from rag_eval.io import load_corpus, load_queries, write_json
 from rag_eval.metrics import evaluate_query, aggregate, QueryMetrics
 from rag_eval.retrievers import BM25Retriever, BM25Config
 
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    plt = None
+
 
 def _format_table(agg: Dict[int, Dict[str, float]], ks: List[int]) -> str:
     headers = ["k", "precision", "recall", "mrr"]
@@ -37,6 +42,7 @@ def main() -> int:
     p.add_argument("--ks", nargs="+", type=int, default=[1, 5, 10], help="Cutoffs k for metrics.")
     p.add_argument("--topk", type=int, default=10, help="How many docs to retrieve per query (>= max(ks)).")
     p.add_argument("--out", default="results.json", help="Output JSON path.")
+    p.add_argument("--plot", default=None, help="Path to save a metrics plot (e.g. report.png). If omitted, no plot.")
     p.add_argument("--bm25-k1", type=float, default=1.2)
     p.add_argument("--bm25-b", type=float, default=0.75)
 
@@ -73,6 +79,28 @@ def main() -> int:
         })
 
     agg = aggregate(all_metrics)
+
+    if not agg:
+        raise RuntimeError("No metrics were computed (agg is empty). Check input files.")
+
+    if args.plot:
+        if plt is None:
+            raise RuntimeError("Plot requested but matplotlib is not installed. Install it or run without --plot.")
+        ks_sorted = sorted(agg.keys())
+        precisions = [agg[k]["precision"] for k in ks_sorted]
+        recalls = [agg[k]["recall"] for k in ks_sorted]
+
+        plt.figure()
+        plt.plot(ks_sorted, precisions, marker="o", label="Precision@k")
+        plt.plot(ks_sorted, recalls, marker="o", label="Recall@k")
+        plt.xlabel("k")
+        plt.ylabel("Score")
+        plt.title("Retrieval Metrics vs k")
+        plt.legend()
+        plt.grid(True)
+        plt.savefig(args.plot)
+        plt.close()
+        print(f"Saved: {args.plot}")
 
     print(_format_table(agg, ks))
     payload = {
