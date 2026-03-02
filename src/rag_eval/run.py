@@ -1,0 +1,97 @@
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+from typing import List, Dict, Any
+
+from rag_eval.io import load_corpus, load_queries, write_json
+from rag_eval.metrics import evaluate_query, aggregate, QueryMetrics
+from rag_eval.retrievers import BM25Retriever, BM25Config
+
+
+def _format_table(agg: Dict[int, Dict[str, float]], ks: List[int]) -> str:
+    headers = ["k", "precision", "recall", "mrr"]
+    rows = []
+    for k in ks:
+        a = agg.get(k, {})
+        rows.append([
+            str(k),
+            f"{a.get('precision', 0.0):.4f}",
+            f"{a.get('recall', 0.0):.4f}",
+            f"{a.get('mrr', 0.0):.4f}",
+        ])
+
+    colw = [max(len(headers[i]), max(len(r[i]) for r in rows)) for i in range(len(headers))]
+    def fmt_row(r): return " | ".join(r[i].ljust(colw[i]) for i in range(len(headers)))
+
+    line = "-+-".join("-" * w for w in colw)
+    out = [fmt_row(headers), line]
+    out += [fmt_row(r) for r in rows]
+    return "\n".join(out)
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(description="Evaluate retrieval quality (BM25 baseline) with standard metrics.")
+    p.add_argument("--corpus", required=True, help="Path to corpus JSONL (doc_id, text).")
+    p.add_argument("--queries", required=True, help="Path to queries JSONL (query_id, query, relevant_ids).")
+    p.add_argument("--ks", nargs="+", type=int, default=[1, 5, 10], help="Cutoffs k for metrics.")
+    p.add_argument("--topk", type=int, default=10, help="How many docs to retrieve per query (>= max(ks)).")
+    p.add_argument("--out", default="results.json", help="Output JSON path.")
+    p.add_argument("--bm25-k1", type=float, default=1.2)
+    p.add_argument("--bm25-b", type=float, default=0.75)
+
+    args = p.parse_args()
+
+    ks = sorted(set(args.ks))
+    if args.topk < max(ks):
+        raise ValueError("--topk must be >= max(--ks)")
+
+    corpus = load_corpus(args.corpus)
+    queries = load_queries(args.queries)
+
+    retriever = BM25Retriever(corpus, BM25Config(k1=args.bm25_k1, b=args.bm25_b))
+
+    all_metrics: List[QueryMetrics] = []
+    per_query: List[Dict[str, Any]] = []
+
+    for q in queries:
+        retrieved = retriever.retrieve(q.query, top_k=args.topk)
+        retrieved_ids = [doc_id for doc_id, _score in retrieved]
+
+        q_metrics = evaluate_query(q.query_id, q.relevant_ids, retrieved_ids, ks=ks)
+        all_metrics.extend(q_metrics)
+
+        per_query.append({
+            "query_id": q.query_id,
+            "query": q.query,
+            "relevant_ids": q.relevant_ids,
+            "retrieved": [{"doc_id": doc_id, "score": float(score)} for doc_id, score in retrieved],
+            "metrics": [
+                {"k": m.k, "precision": m.precision, "recall": m.recall, "mrr": m.mrr}
+                for m in q_metrics
+            ],
+        })
+
+    agg = aggregate(all_metrics)
+
+    print(_format_table(agg, ks))
+    payload = {
+        "run_at": datetime.now(timezone.utc).isoformat(),
+        "config": {
+            "retriever": "bm25",
+            "bm25": {"k1": args.bm25_k1, "b": args.bm25_b},
+            "ks": ks,
+            "topk": args.topk,
+            "corpus_path": args.corpus,
+            "queries_path": args.queries,
+        },
+        "aggregate": agg,
+        "per_query": per_query,
+    }
+    write_json(args.out, payload)
+    print(f"\nSaved: {args.out}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
