@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-03-02T15:07:33.589245+00:00",
+  "run_at": "2026-03-02T15:24:40.128844+00:00",
   "config": {
     "retriever": "bm25",
     "bm25": {
@@ -20,18 +20,21 @@
       "precision": 1.0,
       "recall": 1.0,
       "mrr": 1.0,
+      "ndcg": 1.0,
       "n_queries": 2.0
     },
     "5": {
       "precision": 0.2,
       "recall": 1.0,
       "mrr": 1.0,
+      "ndcg": 1.0,
       "n_queries": 2.0
     },
     "10": {
       "precision": 0.1,
       "recall": 1.0,
       "mrr": 1.0,
+      "ndcg": 1.0,
       "n_queries": 2.0
     }
   },
@@ -61,19 +64,22 @@
           "k": 1,
           "precision": 1.0,
           "recall": 1.0,
-          "mrr": 1.0
+          "mrr": 1.0,
+          "ndcg": 1.0
         },
         {
           "k": 5,
           "precision": 0.2,
           "recall": 1.0,
-          "mrr": 1.0
+          "mrr": 1.0,
+          "ndcg": 1.0
         },
         {
           "k": 10,
           "precision": 0.1,
           "recall": 1.0,
-          "mrr": 1.0
+          "mrr": 1.0,
+          "ndcg": 1.0
         }
       ]
     },
@@ -102,19 +108,22 @@
           "k": 1,
           "precision": 1.0,
           "recall": 1.0,
-          "mrr": 1.0
+          "mrr": 1.0,
+          "ndcg": 1.0
         },
         {
           "k": 5,
           "precision": 0.2,
           "recall": 1.0,
-          "mrr": 1.0
+          "mrr": 1.0,
+          "ndcg": 1.0
         },
         {
           "k": 10,
           "precision": 0.1,
           "recall": 1.0,
-          "mrr": 1.0
+          "mrr": 1.0,
+          "ndcg": 1.0
         }
       ]
     }

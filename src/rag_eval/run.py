@@ -15,7 +15,7 @@ except ImportError:
 
 
 def _format_table(agg: Dict[int, Dict[str, float]], ks: List[int]) -> str:
-    headers = ["k", "precision", "recall", "mrr"]
+    headers = ["k", "precision", "recall", "mrr", "ndcg"]
     rows = []
     for k in ks:
         a = agg.get(k, {})
@@ -24,6 +24,7 @@ def _format_table(agg: Dict[int, Dict[str, float]], ks: List[int]) -> str:
             f"{a.get('precision', 0.0):.4f}",
             f"{a.get('recall', 0.0):.4f}",
             f"{a.get('mrr', 0.0):.4f}",
+            f"{a.get('ndcg', 0.0):.4f}",
         ])
 
     colw = [max(len(headers[i]), max(len(r[i]) for r in rows)) for i in range(len(headers))]
@@ -73,7 +74,7 @@ def main() -> int:
             "relevant_ids": q.relevant_ids,
             "retrieved": [{"doc_id": doc_id, "score": float(score)} for doc_id, score in retrieved],
             "metrics": [
-                {"k": m.k, "precision": m.precision, "recall": m.recall, "mrr": m.mrr}
+                {"k": m.k, "precision": m.precision, "recall": m.recall, "mrr": m.mrr, "ndcg": m.ndcg}
                 for m in q_metrics
             ],
         })
@@ -89,10 +90,12 @@ def main() -> int:
         ks_sorted = sorted(agg.keys())
         precisions = [agg[k]["precision"] for k in ks_sorted]
         recalls = [agg[k]["recall"] for k in ks_sorted]
+        ndcgs = [agg[k]["ndcg"] for k in ks_sorted]
 
         plt.figure()
         plt.plot(ks_sorted, precisions, marker="o", label="Precision@k")
         plt.plot(ks_sorted, recalls, marker="o", label="Recall@k")
+        plt.plot(ks_sorted, ndcgs, marker="o", label="nDCG@k")
         plt.xlabel("k")
         plt.ylabel("Score")
         plt.title("Retrieval Metrics vs k")
