@@ -1,0 +1,10 @@
+{"query_id":"q1","query":"What is the capital of Italy?","relevant_ids":["d1"]}
+{"query_id":"q2","query":"Which city is famous for pizza?","relevant_ids":["d3"]}
+{"query_id":"q3","query":"Which Italian city is associated with Renaissance art?","relevant_ids":["d4"]}
+{"query_id":"q4","query":"Which city is famous for canals and gondolas?","relevant_ids":["d5"]}
+{"query_id":"q5","query":"Which city hosted the 2006 Winter Olympics in Italy?","relevant_ids":["d6"]}
+{"query_id":"q6","query":"Which city is known for tagliatelle al ragù?","relevant_ids":["d7"]}
+{"query_id":"q7","query":"Where is the Leaning Tower located?","relevant_ids":["d8"]}
+{"query_id":"q8","query":"Which Italian city is a major port with maritime history?","relevant_ids":["d9"]}
+{"query_id":"q9","query":"Which region has Mount Etna?","relevant_ids":["d10"]}
+{"query_id":"q10","query":"What is the official currency of Italy?","relevant_ids":["d12"]}

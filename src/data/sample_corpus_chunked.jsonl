@@ -1,0 +1,35 @@
+{"doc_id":"d1#c1","text":"Rome is the capital of Italy and the seat of government.","metadata":{"parent_doc":"d1"}}
+{"doc_id":"d1#c2","text":"Rome is in the Lazio region and is known for ancient history.","metadata":{"parent_doc":"d1"}}
+
+{"doc_id":"d2#c1","text":"Milan is known for fashion, design, and business.","metadata":{"parent_doc":"d2"}}
+{"doc_id":"d2#c2","text":"Milan hosts major events like Fashion Week.","metadata":{"parent_doc":"d2"}}
+
+{"doc_id":"d3#c1","text":"Naples is famous for pizza and its historic city center.","metadata":{"parent_doc":"d3"}}
+{"doc_id":"d3#c2","text":"Neapolitan pizza is protected by traditional standards.","metadata":{"parent_doc":"d3"}}
+
+{"doc_id":"d4#c1","text":"Florence is associated with Renaissance art and architecture.","metadata":{"parent_doc":"d4"}}
+{"doc_id":"d4#c2","text":"The Uffizi Gallery is in Florence and houses famous artworks.","metadata":{"parent_doc":"d4"}}
+
+{"doc_id":"d5#c1","text":"Venice is built on canals and is famous for gondolas.","metadata":{"parent_doc":"d5"}}
+{"doc_id":"d5#c2","text":"Venice has landmarks like St Mark's Basilica and Rialto Bridge.","metadata":{"parent_doc":"d5"}}
+
+{"doc_id":"d6#c1","text":"Turin is known for the automotive industry and Italian cinema.","metadata":{"parent_doc":"d6"}}
+{"doc_id":"d6#c2","text":"Turin hosted the 2006 Winter Olympics and has the Mole Antonelliana.","metadata":{"parent_doc":"d6"}}
+
+{"doc_id":"d7#c1","text":"Bologna is known for rich cuisine and medieval towers.","metadata":{"parent_doc":"d7"}}
+{"doc_id":"d7#c2","text":"Tagliatelle al ragù is a traditional dish from Bologna.","metadata":{"parent_doc":"d7"}}
+
+{"doc_id":"d8#c1","text":"Pisa is known for the Leaning Tower located in Piazza dei Miracoli.","metadata":{"parent_doc":"d8"}}
+{"doc_id":"d8#c2","text":"The Leaning Tower of Pisa is a freestanding bell tower.","metadata":{"parent_doc":"d8"}}
+
+{"doc_id":"d9#c1","text":"Genoa is a major port city with maritime history.","metadata":{"parent_doc":"d9"}}
+{"doc_id":"d9#c2","text":"Genoa has a large historic center and an important aquarium.","metadata":{"parent_doc":"d9"}}
+
+{"doc_id":"d10#c1","text":"Sicily is an island region with Mount Etna, an active volcano.","metadata":{"parent_doc":"d10"}}
+{"doc_id":"d10#c2","text":"Palermo is the capital of Sicily and has Arab-Norman architecture.","metadata":{"parent_doc":"d10"}}
+
+{"doc_id":"d11#c1","text":"Sardinia is an island region known for beaches and rugged interior.","metadata":{"parent_doc":"d11"}}
+{"doc_id":"d11#c2","text":"Cagliari is the capital of Sardinia and a cultural center.","metadata":{"parent_doc":"d11"}}
+
+{"doc_id":"d12#c1","text":"The Euro is the official currency of Italy.","metadata":{"parent_doc":"d12"}}
+{"doc_id":"d12#c2","text":"Italy adopted the Euro in the early 2000s as part of the Eurozone.","metadata":{"parent_doc":"d12"}}

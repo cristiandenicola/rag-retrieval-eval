@@ -105,7 +105,6 @@ Temporary Items
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
-[Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
 
@@ -114,5 +113,17 @@ pip-selfcheck.json
 /.vscode/settings.json
 /**/.env*
 
-# Output
-.json
+# outputs
+results*.json
+report*.png
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# BEIR downloads (keep repo light)
+src/data/scifact/
+src/data/scifact.zip
+src/data/beir_scifact_subset/
